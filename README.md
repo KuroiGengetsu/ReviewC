@@ -271,7 +271,7 @@ putchar(   *( *(p+2) + 14)   );  // 打印 p
 编写函数 `char *smash(const char **words, size_t count)`, 让一个二维字符串数组中的字符串都拼接在一起并用空格隔开, 返回这个新字符串。
 例如, 传入 `"hello", "world"`, 返回 `"hello world"`
 
-源代码见 [Sentence_Smash.c](https://github.com/KuroiGengetsu/MyCodeWars/blob/master/C_code/Sentence_Smash.c);
+源代码见 [Sentence_Smash.c](https://github.com/KuroiGengetsu/MyCodeWars/blob/master/C_code/Sentence_Smash.c)
 
 ```C
 #include <stdio.h>
