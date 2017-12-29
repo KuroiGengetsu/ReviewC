@@ -31,7 +31,7 @@ C是一种  **大小写敏感的语言**。
 
 注意： `标准并没有规定长整型必须比短整型长， 只是规定它不得比短整型短`
 
-> 源代码见于 [type_size.c]() 或在 `CppReference.chm` 搜索 `Numeric limits`
+> 源代码见于 [type_size.c](https://github.com/KuroiGengetsu/ReviewC/blob/master/examples/type_size.c) 或在 `CppReference.chm` 搜索 `Numeric limits`
 
 我的输出结果如下:
 
