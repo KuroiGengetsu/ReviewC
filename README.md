@@ -266,7 +266,7 @@ putchar(   *( *(p+2) + 14)   );  // 打印 p
 
 ## 一维数组
 
-源代码见 [one_dev_int_array.c](https://github.com/KuroiGengetsu/ReviewC/blob/master/examples/one_dev_int_array.c)
+源代码见 [./examples/one_dev_int_array.c](https://github.com/KuroiGengetsu/ReviewC/blob/master/examples/one_dev_int_array.c)
 
 ```C
 /**
@@ -296,8 +296,10 @@ void test_int() {
 
 ## 二维数组
 
-```C
+如何用指针指向二维数组, 以及如何访问二维数组中的元素 或 修改元素的值
+源代码见 [./examples/two_dev_double_array.c](https://github.com/KuroiGengetsu/ReviewC/blob/master/examples/two_dev_double_array.c)
 
+```C
 void test_double() {
     double arr[ROW][COLUMN] = {
         {1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9},  // 由于只写了9个数, 所以最后一个数是 0
