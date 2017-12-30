@@ -15,6 +15,7 @@ typedef _Bool bool;
  * ROW     行数
  * COLUMN  列数
  * test_double(void) 测试如何指向二维数组
+ * isReversed        判断二维数组是否是反转的
  * getNumbers(int n) 给定一个数, 返回两个数组, 一个数组全是素数, 另一个全不是素数, 范围是小于等于给定的数
  *                   用 -1 表示每个数组的最后元素
  */
@@ -135,9 +136,8 @@ int ** getNumbers(int n) {
     index1 = index2 = 0;
 
     for(int i = 1; i < n + 1; i++) {
-        bool isPrime = true;
-
         // 判断是否是素数
+        bool isPrime = true;
         for(int j = 2; j <= sqrt(i); j++) {
             if(i % j == 0) {
                 isPrime = false;
@@ -151,6 +151,7 @@ int ** getNumbers(int n) {
         else
             result[1][index2++] = i;
     }
+
     // 将结束时候的元素设为 -1, 为了标志结束
     result[0][index1] = result[1][index2] = -1;
 
