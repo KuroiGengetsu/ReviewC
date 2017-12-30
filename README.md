@@ -264,6 +264,36 @@ putchar(   *( *(p+2) + 14)   );  // 打印 p
 
 # 13. 指针表示数组元素
 
+## 一维数组
+
+源代码见 [one_dev_int_array.c](https://github.com/KuroiGengetsu/ReviewC/blob/master/examples/one_dev_int_array.c)
+
+```C
+/**
+ * 用指针指向各种数组
+ */
+
+void test_int() {
+    // 指向一个数组的方法
+    int one_dev[10];  // 只定义, 还没有初始化
+    int *p1 = one_dev;  // 指向数组头
+    int *p2 = &one_dev[0];  // 指向数组头
+    int *p3 = one_dev + 3;  // 指向数组第四个元素
+    int *p4 = &one_dev[3];  // 指向数组第四个元素
+    int *p_end = one_dev + 10 - 1;  // 指向数组尾, 10 是数组长度
+
+    int *p6, *p7;
+    p6 = one_dev;  // 指向数组头
+    p7 = one_dev + 9;  // 指向数组尾
+
+    *p1 = 1;  // one_dev[0] = 1;
+    *(p1 + 1) = 2;  // one_dev[1] = 2;
+    *(p1 + 9) = 10;  // one_dev[9] = 10;  // *p_end = 10;
+    printf("one_dev[0] = %d, one_dev[1] = %d, one_dev[9] = %d\n", *p1, *(p1 + 1), *p_end);
+    // return;  // return nothing
+}
+```
+
 例题都是 [CodeWars](http://www.codewars.com/r/C7F7sA) 上的题
 
 [Arrays](https://www.codewars.com/kata/search/c?beta=false&q=&r=-8&tags=Arrays)
