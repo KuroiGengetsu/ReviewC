@@ -294,11 +294,40 @@ void test_int() {
 }
 ```
 
+## 二维数组
+
+```C
+
+void test_double() {
+    double arr[ROW][COLUMN] = {
+        {1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9},  // 由于只写了9个数, 所以最后一个数是 0
+        {1.0, 4.0, 9.0, 16.0, 25.0, 36.0, 49.0, 64.0, 81.0, 100.0},
+        {124.5, 314.1, 1e-3, 3.6e-4, 66.3, 22.3, 233.3, 16.4, 13.8, 1e-8}
+    };
+
+    // 指向二维数组
+    double (*head)[COLUMN] = arr;  // head 指向二维数组arr头, 也就是 arr[0], 并不是 arr[0][0]
+    double (*p1)[COLUMN] = arr + 1;  // p1 指向 二维数组第二行, 也就是 arr[1]
+    double (*end)[COLUMN] = arr + ROW - 1;  // end 指向最后一行
+
+    // 指向元素
+    double *p2 = &arr[0][0];  // 指向第一个元素
+    double *final_one = p2 + (COLUMN * 3) - 1;  // final_one 指向最后一个元素
+    double *final_one2 = *end + COLUMN - 1;  // 指向最后一个元素, 注意 是 *end, 因为 end 多了一个维度
+
+    // 访问, %g 既可以打印 %f, 又可以打印 %e, 会把末尾多余的0去掉
+    printf("arr[1][4] = %g\n", *(*(head+1) + 4));  // 打印 25
+    printf("arr[2][4] = %g\n", *(p2 + (COLUMN * 2) + 4)  );  // 打印 66.3
+    printf("arr[2][9] = %g\n", *((*end) + 9));  // 打印 1e-008, 等同于 *final_one
+    printf("arr[2][8] = %g\n", *(final_one2-1));  // 打印 13.8
+}
+```
+
+## 例一 Sentence Smash
+
 例题都是 [CodeWars](http://www.codewars.com/r/C7F7sA) 上的题
 
 [Arrays](https://www.codewars.com/kata/search/c?beta=false&q=&r=-8&tags=Arrays)
-
-## 例一 Sentence Smash
 
 编写函数 `char *smash(const char **words, size_t count)`, 让一个二维字符串数组中的字符串都拼接在一起并用空格隔开, 返回这个新字符串。
 例如, 传入 `"hello", "world"`, 返回 `"hello world"`
