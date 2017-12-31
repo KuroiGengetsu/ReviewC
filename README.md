@@ -443,20 +443,7 @@ int add(int a, int b) {  // 形参, 代码块作用域, 参数名没必要和函
 
 > 遵循一个原则: 一个函数中的所有语句标签必须唯一。
 
-```C
-// 符号函数 sign(x)
-int sign(int x) {
-    if(x > 0)
-        goto line1;
-    else if(x == 0)
-        goto line2;
-    else
-        goto line3;
-    line1: return 1;
-    line2: return 0;
-    line3: return -1;
-}
-```
+`我不会给例子`
 
 # 18. 宏替换 and 带参宏替换
 
