@@ -4,9 +4,9 @@
  * 静态链表
  */
 
-typedef struct CHAIN {
+typedef struct _NODE {
     int           data;  // 拥有一个 int 型 成员 data
-    struct CHAIN  *next;  // 拥有一个指向 CHAIN 结构体的 结构体指针 next
+    struct _NODE  *next;  // 拥有一个指向 _NODE 结构体的 结构体指针 next
 } NODE;  // NODE 现在是个变量名
 
 void print_chain(NODE *head);

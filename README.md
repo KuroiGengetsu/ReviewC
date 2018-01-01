@@ -795,9 +795,9 @@ struct C {
  * 静态链表
  */
 
-typedef struct CHAIN {
+typedef struct _NODE {
     int           data;  // 拥有一个 int 型 成员 data
-    struct CHAIN  *next;  // 拥有一个指向 CHAIN 结构体的 结构体指针 next, 这就是所谓的自引用
+    struct _NODE  *next;  // 拥有一个指向 CHAIN 结构体的 结构体指针 next, 这就是所谓的自引用
 } NODE;  // NODE 现在是个变量名
 
 void print_chain(NODE *head);
@@ -844,6 +844,14 @@ void print_chain(NODE *head) {
 这里声明的 5 个结构体变量, 他们的 next 成员都指向下一个结构体变量, 这样就形成了一个链, 就是所谓的单向链表
 
 值得注意的就是将最后的那个结点的 next 指向了 NULL, 这样也算做初始化了, 可以用来判断是否到结尾。
+
+## 动态链表
+
+动态链表主要从下面这四方面入手: **创建、打印、插入、删除**
+
+源代码见[dynamic_chain.c]()
+
+## 例题 *Josephus 约瑟夫环*
 
 
 # 21. 文件操作
