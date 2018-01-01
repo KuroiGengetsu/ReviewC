@@ -473,7 +473,7 @@ int main() {
 "__FILE__:`pretestc` compiled in __LINE__ `5` on __DATE__ `Jan  1 2018` at __TIME__ `15:49:01` with __STDC__ `1`"
 ```
 
-## `#define`
+## \#define
 
 
 
