@@ -445,7 +445,35 @@ int add(int a, int b) {  // 形参, 代码块作用域, 参数名没必要和函
 
 `我不会给例子`
 
-# 18. 宏替换 and 带参宏替换
+# 18. 预处理器(主要讲 宏替换 and 带参宏替换)
+
+## 预定义符号
+
+| 符号 | 样例值 | 含义 |
+|:--|:--|:--|
+| `__FILE__` | `"pretest.c"` | 进行编译的源文件名 |
+| `__LINE__` | `5` | 文件当前的行号 |
+| `__DATE__` | `"Jan  1 2018"` | 编译的日期 |
+| `__TIME__` | `"15:49:01"` | 编译的时间 |
+| `__STDC` | `1` | 如果编译器遵循 *ANSI C*, 那么它的值就是 1, 否则未定义|
+
+```C
+#include <stdio.h>
+
+int main() {
+    printf("__FILE__:`%s` compiled in __LINE__ `%d` on __DATE__ `%s` at __TIME__ `%s` with __STDC__ `%d`",
+         __FILE__, __LINE__, __DATE__, __TIME__, __STDC__);  // 第五行
+    return 0;
+}
+```
+
+会打印:
+
+```C
+"__FILE__:`pretestc` compiled in __LINE__ `5` on __DATE__ `Jan  1 2018` at __TIME__ `15:49:01` with __STDC__ `1`"
+```
+
+## `#define`
 
 
 
