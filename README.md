@@ -786,7 +786,7 @@ struct C {
 
 ## 静态链表
 
-先给出静态链表的代码, 见 [struct_and_pointer.c]()
+先给出静态链表的代码, 见 [struct_and_pointer.c](https://github.com/KuroiGengetsu/ReviewC/blob/master/examples/struct_and_pointer.c)
 
 ```C
 #include <stdio.h>
@@ -833,13 +833,13 @@ void print_chain(NODE *head) {
 }
 
 ```
-| 结点名 NODE | 数据 data | 结构体指针 next |
+| 结点名 *NODE* | 数据 *data* | 结构体指针 *next* |
 |:-:|:-:|:-:|
-| head | 0 | 指向 a |
-| a | 1 | 指向 b |
-| b | 2 | 指向 c |
-| c | 3 | 指向 end |
-| end | 4 | 指向 *NULL*, 即空指针 |
+| *head* | 0 | 指向 *a* |
+| *a* | 1 | 指向 *b* |
+| *b* | 2 | 指向 *c* |
+| *c* | 3 | 指向 *end* |
+| *end* | 4 | 指向 *NULL*, 即空指针 |
 
 这里声明的 5 个结构体变量, 他们的 next 成员都指向下一个结构体变量, 这样就形成了一个链, 就是所谓的单向链表
 
