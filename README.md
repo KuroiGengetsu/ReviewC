@@ -636,7 +636,7 @@ struct COMPLEX {
 
 使用方法: **结构体变量名.成员名**
 
-例子:  源代码见[./examples/struct_test.c]()
+例子:  源代码见[./examples/struct_test.c](https://github.com/KuroiGengetsu/ReviewC/blob/master/examples/struct_test.c)
 
 ```C
 #include <stdio.h>
