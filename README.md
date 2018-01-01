@@ -782,6 +782,68 @@ struct C {
 
 # 20. 使用结构体指针访问结构体成员
 
+单向链表是最常见的高级数据结构, 用它来讲解结构体指针的使用是最好不过的了
+
+## 静态链表
+
+先给出静态链表的代码, 见 [struct_and_pointer.c]()
+
+```C
+#include <stdio.h>
+
+/**
+ * 静态链表
+ */
+
+typedef struct CHAIN {
+    int           data;  // 拥有一个 int 型 成员 data
+    struct CHAIN  *next;  // 拥有一个指向 CHAIN 结构体的 结构体指针 next, 这就是所谓的自引用
+} NODE;  // NODE 现在是个变量名
+
+void print_chain(NODE *head);
+
+int main() {
+    // 创建五个 NODE 变量
+    NODE head, a, b, c, end;
+
+    // 初始化他们 next 指针的指向
+    head.next = &a;
+    a.next = &b;
+    b.next = &c;
+    c.next = &end;
+    end.next = NULL;
+
+    // 初始化数据
+    head.data = 0;
+    a.data = 1;
+    b.data = 2;
+    c.data = 3;
+    end.data = 4;
+
+    print_chain(&head);  // 函数传入结构体变量可以写成这样, 因为形参是 NODE* 类型。
+    return 0;
+}
+
+void print_chain(NODE *head) {
+    while(head->next != NULL) {
+        printf("%d ", head->data);
+        head = head->next;
+    }
+    printf("%d\n", head->data);
+}
+
+```
+| 结点名 NODE | 数据 data | 结构体指针 next |
+|:-:|:-:|:-:|
+| head | 0 | 指向 a |
+| a | 1 | 指向 b |
+| b | 2 | 指向 c |
+| c | 3 | 指向 end |
+| end | 4 | 指向 *NULL*, 即空指针 |
+
+这里声明的 5 个结构体变量, 他们的 next 成员都指向下一个结构体变量, 这样就形成了一个链, 就是所谓的单向链表
+
+值得注意的就是将最后的那个结点的 next 指向了 NULL, 这样也算做初始化了, 可以用来判断是否到结尾。
 
 
 # 21. 文件操作
