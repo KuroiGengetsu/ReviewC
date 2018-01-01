@@ -18,6 +18,7 @@ struct COMPLEX {
 int main() {
     long distance = 10000;
 
+    // 直接访问
     struct COMPLEX comp; // 声明一个结构体变量
     comp.a = 3;  // 访问 整型成员变量 a 并赋值 3
     comp.b[5] = 17;  // 访问整型数组成员变量 b 的第六个元素, 并赋值 17, 你也可以这样写: (comp.b)[5]
@@ -30,5 +31,17 @@ int main() {
         comp.a, comp.b[5],
         *comp.lp,  // 注意这里的 `.` 操作符优先级比 间访运算符 `*` 高, 不放心你可以加上括号 *(comp.lp)
         comp.s.a, comp.s.b, comp.s.c);  // 不放心你可以加上括号, 如 (comp.s).a 等等
+    
+    // 间接访问
+    mystruct s;
+    mystruct *sp = &s;
+
+    // 第一种方法
+    (*sp).a = 3;
+    printf("(*sp).a = %d\n", (*sp).a);
+    
+    // 第二种方法
+    sp -> a = 4;
+    printf("sp -> a = %d\n", sp -> a);
     return 0;
 }

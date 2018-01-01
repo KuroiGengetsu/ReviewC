@@ -680,7 +680,33 @@ int main() {
 
 #### 间接访问
 
+如果你拥有一个结构体指针成员, 访问这个成员指向的结构体有两种方法:
 
+* 先通过 **间访运算符 \*** 访问所指向的结构变量, 然后再通过 **点操作符 .** 访问成员
+
+* 通过 **箭头操作符 ->** 操作符直接访问所指向的结构变量的成员
+
+```C
+typedef struct {
+    int   a;
+    char  b;
+    float c;
+} mystruct;
+
+int main() {
+    mystruct s;
+    mystruct *sp = &s;
+
+    // 第一种方法
+    (*sp).a = 3;
+    printf("(*sp).a = %d\n", (*sp).a);
+    
+    // 第二种方法
+    sp -> a = 4;
+    printf("sp -> a = %d\n", sp -> a);
+    return 0;
+}
+```
 
 #### 自引用
 
