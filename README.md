@@ -849,7 +849,7 @@ void print_chain(NODE *head) {
 
 动态链表主要从下面这四方面入手: **创建、打印、插入、删除**
 
-源代码见[dynamic_chain.c]()
+源代码见[dynamic_chain.c](https://github.com/KuroiGengetsu/ReviewC/blob/master/examples/dynamic_chain.c)
 
 ## 例题 *Josephus 约瑟夫环*
 
