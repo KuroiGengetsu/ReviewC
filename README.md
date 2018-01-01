@@ -694,7 +694,7 @@ struct B {
 struct C {
     int          a;
     short        b[10];
-    mystruct     c;
+    mystruct     other;
 } x = {  // 我只是把它展开写而已
     3,
     {1, 2, 3, 4, 5},
