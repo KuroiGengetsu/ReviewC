@@ -1,6 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// 控制是否要测试
+#define INSERT_NODE 0
+#define POP 0
+#define DELETE_VALUE 0
+#define GET_LEN 1
+#define FREE_ALL 1
+
+
 // 结点结构体
 typedef struct _NODE {
     int          data;
@@ -22,6 +30,11 @@ int pop(NODE *head, int index);
 // 根据数据删除值
 void delete_value(NODE *head, int value);
 
+// 获得链表的当前长度
+int get_len(NODE *head);
+
+void free_all(NODE *head, int len_now);
+
 int main() {
     int len;
     puts("Please input the length of the chain:(better more than 3)");
@@ -31,12 +44,18 @@ int main() {
     NODE *head = create_chain(len);
     print_chain(head);
 
+#if INSERT_NODE
+
     // 在链表中插入值
     int index, value;
     puts("please input index and value which you want to insert:");
     scanf("%d%d", &index, &value);
     insert_node(head, index, value);
     print_chain(head);
+
+#endif
+
+#if POP
 
     // 测试pop(head, 0)
     int final = pop(head, 0);
@@ -51,12 +70,34 @@ int main() {
     printf("fetch %d at index %d.\n", fetch, index2);
     print_chain(head);
 
+#endif
+
+#if DELETE_VALUE
+
     // 测试 delete_value
     puts("Please input the value you want to delete:");
     int value3;
     scanf("%d", &value3);
     delete_value(head, value3);
     print_chain(head);
+
+#endif
+
+#if GET_LEN
+
+    int len_now = get_len(head);
+    printf("the length of chain is %d\n", len_now);
+
+#endif
+
+#if FREE_ALL
+  #if GET_LEN
+
+    free_all(head, len_now);
+
+  #endif
+#endif
+
     return 0;
 }
 
@@ -85,7 +126,6 @@ void print_chain(NODE *head) {
     }
     putchar('\n');
 }
-
 
 void insert_node(NODE *head, int index, int value) {
     while(index--)
@@ -144,4 +184,24 @@ void delete_value(NODE *head, int value) {
         head->next = trash->next;
         free(trash);
     }
+}
+
+int get_len(NODE *head) {
+    int len = 0;
+    while(head->next != NULL) {
+        head = head->next;
+        len++;
+    }
+    return len;
+}
+
+void free_all(NODE *head, int len_now) {
+    NODE *tmp;
+    for(int i = 0; i < len_now; i++) {
+        tmp = head;
+        head = head->next;
+        free(tmp);
+    }
+    free(head);
+    puts("free_all() successfully!");
 }
