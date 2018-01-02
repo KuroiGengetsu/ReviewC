@@ -33,6 +33,7 @@ void delete_value(NODE *head, int value);
 // 获得链表的当前长度
 int get_len(NODE *head);
 
+// 释放所有的空间
 void free_all(NODE *head, int len_now);
 
 int main() {
@@ -88,14 +89,12 @@ int main() {
     int len_now = get_len(head);
     printf("the length of chain is %d\n", len_now);
 
-#endif
-
-#if FREE_ALL
   #if GET_LEN
 
     free_all(head, len_now);
 
   #endif
+
 #endif
 
     return 0;
