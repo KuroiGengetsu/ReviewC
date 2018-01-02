@@ -52,18 +52,16 @@ NODE * create_chain(int len) {
     head = (NODE*)malloc(sizeof(NODE));
     link = head;
     printf("Please input %d int numbers:\n", len);
-    while(--len) {
-        // 输入值
-        scanf("%d", &link->data);
+    while(len--) {
         // 创建新空间
         store = (NODE*)malloc(sizeof(NODE));
+        // 输入值
+        scanf("%d", &store->data);
         // 上一个结点的 next 指向 store
         link->next = store;
         // link移到这个结点
         link = store;
     }
-    // 输入最后一个数据
-    scanf("%d", &link->data);
     // 最后一个结点的 next 指向 NULL
     link->next = NULL;
     // 返回头
@@ -74,18 +72,16 @@ void print_chain(NODE *head) {
     int index = 0;
     puts("index | value");
     while(head->next != NULL) {
-        printf("%5d | %5d\n", index++, head->data);
+        printf("%5d | %5d\n", index++, head->next->data);
         head = head->next;
     }
-    // 打印结尾的数据
-    printf("%5d | %5d\n", index++, head->data);
 }
 
 
 void insert_node(NODE *head, int index, int value) {
     NODE *store = (NODE*)malloc(sizeof(NODE));
     store->data = value;
-    while(--index)
+    while(index--)
         head = head->next;
     head->next = store;
     store->next = NULL;
