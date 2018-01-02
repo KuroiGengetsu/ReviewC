@@ -24,7 +24,7 @@ void delete_value(NODE *head, int value);
 
 int main() {
     int len;
-    puts("Please input the length of the chain:");
+    puts("Please input the length of the chain:(better more than 3)");
     scanf("%d", &len);
 
     // 创建 长度为 len 的链表
@@ -38,9 +38,24 @@ int main() {
     insert_node(head, index, value);
     print_chain(head);
 
-    // 测试pop(0)
+    // 测试pop(head, 0)
     int final = pop(head, 0);
     printf("final = %d\n", final);
+    print_chain(head);
+
+    // 测试pop(head, index2)
+    int index2;
+    puts("input the index of the value which you want to pop:");
+    scanf("%d", &index2);
+    int fetch = pop(head, index2);
+    printf("fetch %d at index %d.\n", fetch, index2);
+    print_chain(head);
+
+    // 测试 delete_value
+    puts("Please input the value you want to delete:");
+    int value3;
+    scanf("%d", &value3);
+    delete_value(head, value3);
     print_chain(head);
     return 0;
 }
@@ -63,25 +78,26 @@ NODE * create_chain(int len) {
 
 void print_chain(NODE *head) {
     int index = 0;
-    puts("index | value");
+    puts("\nindex | value");
     while(head->next != NULL) {
         printf("%5d | %5d\n", index++, head->next->data);
         head = head->next;
     }
+    putchar('\n');
 }
 
 
 void insert_node(NODE *head, int index, int value) {
-    NODE *store = (NODE*)malloc(sizeof(NODE));
-    store->data = value;
     while(index--)
         head = head->next;
+    NODE *store = (NODE*)malloc(sizeof(NODE));
+    store->data = value;
+    store->next = (head->next == NULL) ? NULL : head->next;
     head->next = store;
-    store->next = NULL;
 }
 
 int pop(NODE *head, int index) {
-    if(!index) {
+    if(index == 0) {
         if(head->next == NULL) {
             puts("Your chain only has root node!");
             return -1;
@@ -92,5 +108,40 @@ int pop(NODE *head, int index) {
         free(head->next);
         head->next = NULL;
         return result;
+    } else {
+        while(index--)
+            head = head->next;
+        if(head->next->next != NULL) {
+            NODE *trash = head->next;
+            head->next = trash->next;
+            int tmp = trash->data;
+            free(trash);
+            return tmp;
+        } else {
+            int tmp = head->next->data;
+            free(head->next);
+            head->next = NULL;
+            return tmp;
+        }
+    }
+}
+
+void delete_value(NODE *head, int value) {
+    int index = 0;
+    while(head->next != NULL)
+        if(head->next->data != value) {
+            head = head->next;
+            index++;
+        }
+        else
+            break;
+    if(head->next == NULL) {
+        printf("can't find %d in chain.\n", value);
+        return;
+    } else {
+        printf("delete %d at index %d successfully!\n", value, index);
+        NODE *trash = head->next;
+        head->next = trash->next;
+        free(trash);
     }
 }
