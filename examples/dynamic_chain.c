@@ -83,8 +83,8 @@ void insert_node(NODE *head, int index, int value) {
 int pop(NODE *head, int index) {
     if(!index) {
         if(head->next == NULL) {
-            puts("Your chain only has one node!");
-            return head->data;
+            puts("Your chain only has root node!");
+            return -1;
         }
         while(head->next->next != NULL)
             head = head->next;
