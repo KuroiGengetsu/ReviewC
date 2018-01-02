@@ -48,24 +48,17 @@ int main() {
 NODE * create_chain(int len) {
     NODE *head, *link, *store;  // head 是头, link 用于链接链表, store用于创建新空间
 
-    // 申请初始空间
-    head = (NODE*)malloc(sizeof(NODE));
+    head = (NODE*)malloc(sizeof(NODE));  // 申请初始空间
     link = head;
     printf("Please input %d int numbers:\n", len);
     while(len--) {
-        // 创建新空间
-        store = (NODE*)malloc(sizeof(NODE));
-        // 输入值
-        scanf("%d", &store->data);
-        // 上一个结点的 next 指向 store
-        link->next = store;
-        // link移到这个结点
-        link = store;
+        store = (NODE*)malloc(sizeof(NODE));  // 创建新空间
+        scanf("%d", &store->data);  // 输入值
+        link->next = store;  // 上一个结点的 next 指向 store
+        link = store;  // link移到这个结点
     }
-    // 最后一个结点的 next 指向 NULL
-    link->next = NULL;
-    // 返回头
-    return head;
+    link->next = NULL;  // 最后一个结点的 next 指向 NULL
+    return head;  // 返回头
 }
 
 void print_chain(NODE *head) {
