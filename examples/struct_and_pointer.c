@@ -23,7 +23,7 @@ int main() {
     end.next = NULL;
 
     // 初始化数据
-    head.data = 0;
+    // head.data; 不需要给根节点初始化, 根节点不储存数据
     a.data = 1;
     b.data = 2;
     c.data = 3;
@@ -35,8 +35,7 @@ int main() {
 
 void print_chain(NODE *head) {
     while(head->next != NULL) {
-        printf("%d ", head->data);
+        printf("%d ", head->next->data);
         head = head->next;
     }
-    printf("%d\n", head->data);
 }
