@@ -853,6 +853,7 @@ void print_chain(NODE *head) {
 
 ## 例题 *Josephus 约瑟夫环*
 
+源代码见 [Josephus.c](https://github.com/KuroiGengetsu/ReviewC/blob/master/examples/Josephus.c)
 
 # 21. 文件操作
 
