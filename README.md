@@ -857,6 +857,179 @@ void print_chain(NODE *head) {
 
 # 21. 文件操作
 
+## 输入输出函数
+
+### 错误报告
+
+函数原型: `void perror(char const *message);`
+
+1.如果有错误, 它会打印 **给定的字符串+冒号+空格+错误信息**, 错误信息是编译器自动获得的
+
+比如我试图打开一个叫做 *test.txt* 的不存在的文件, 调用它:
+
+`perror("test.txt");`
+
+那么将会打印:
+
+`test.txt: No such file or directory`
+
+2.如果没有, 它会打印 `字符串参数: No error`
+
+### 终止执行
+
+函数原型: `void exit( int status);`
+
+`<stdlib.h>` 中:
+
+1. *EXIT_SUCCESS* 程序终止成功
+
+2. *EXIT_FAILURE* 程序终止失败
+
+### 标准 I/O 常量
+
+`<stdio.h>` 中:
+
+同时打开至少 `FOPEN_MAX` 个文件
+
+合法文件名 `FILENAME_MAX` 个字符
+
+### 流 I/O 总览
+
+默认的三个流:
+
+1. *stdin* 标准输入(standard input)
+
+2. *stdout* 标准输出(standard output)
+
+3. *stderr* 标准错误(standard error)
+
+关于文件 I/O:
+
+1. 程序必须为每一个 **活动状态的文件** 声明一个指针变量, 类型为 `FILE *`
+
+2. **流** 通过调用 *fopen* 函数打开, 并且指定访问文件的 **模式(mode)**
+
+3. 对文件进行操作, 读入或写入
+
+4. 调用 *fclose* 函数关闭流, 可以防止与它关联的文件再次被访问, 并且保证在缓冲区中的数据顺利写入文件中(相当于保存)
+
+输入/输出函数家族:
+
+| 家族名 | 目的 | 可用于所有的流 | 只用于 *stdin* 和 *stdout* | 内存中的字符串 |
+| :--: | :--: | :--: | :--: | :--: |
+| *getchar* | 字符输入 | *fgetc*, *getc* | *getchar* | ① |
+| *putchar* | 字符输出 | *fputc*, *putc* | *putchar* | ① |
+| *gets* | 文本行输入 | *fgets* | *gets* | ② |
+| *puts* | 文本行输出 | *fputs* | *puts* | ② |
+| *scanf* | 格式化输入 | *fscanf* | *scanf* | *sscanf* |
+| *printf* | 格式化输出 | *fprintf* | *printf* | *sprintf* |
+
+> ①: 对指针使用下标引用或间接访问操作从内存获得一个字符(或向内存写入一个字符)<br />②: 使用 *strcpy* 函数从内存读取文本行(或向内存写入文本行)
+
+### 打开流
+
+#### *fopen*
+
+*fopen* 函数用于打开一个特定的文件, 并把一个流和这个文件以相应的模式相关联, 并返回一个指针, 函数原型如下:
+
+`FILE *fopen(char const *name, char const *mode);`
+
+fopen(文件名-字符串, 模式-字符串)
+
+两个参数, 第一个参数是希望打开的文件或设备的名字, mode 是指文件的模式即 只读、只写、读和写 三大类
+
+模式:
+
+| 文件关联模式(mode) | 含义 | 说明 | 如果文件已经存在 | 如果文件不存在 |
+| :-: | :- | :- | :- | :- |
+| `"r"` | 读(read) | **打开** 一个文件供 **读入** | 从 **开头** 读入 | 打开失败, 返回 *NULL* |
+| `"w"` | 写(write) | **创建** 一个文件供 **写入** | **覆盖** 原有内容 | 创建新文件 |
+| `"a"` | 追加(append) | **追加** 到一个文件 | 从 **结尾** 写入 | 创建新文件 |
+| `"r+"` | 读-延伸(read extended) | **打开** 一个文件供 **读写** | 从 **开头** 读入 | **发生错误** |
+| `"w+"` | 写-延伸(write extended) | **创建** 一个文件供 **读写** | **覆盖** 原有内容 | 创建新文件 |
+| `"a+"` | 追加-延伸(append extended) | **打开** 一个文件供 **读写** | 从 **结尾** 写入 | 创建新文件 |
+
+> 如果在模式后添加 `b` 就表示以 **二进制模式** 打开, 例如 *rb*, *wb*, *ab*, *rb+*, *wb+*, *ab+*; 常用到的就是打开音乐、视频文件等, 除非题目有特别要求
+
+打开文件的代码一般如下(如果是 "r" 模式要特别注意判断是否返回值是 *NULL*)
+
+```C
+FILE *fp = fopen("test.txt", "r");
+if(fp == NULL) {
+    perror("test.txt");  // 不认识的话, 可以用puts 或 printf 打印信息, perror 会在给定的参数后自动输出错误原因
+    exit(EXIT_FAILURE);  // 在 <stdlib.h> 中, 退出程序
+}
+```
+
+即如果 *fopen* 返回值是 *NULL*, 就打印错误信息并退出程序, 错误信息如下:
+
+`test.txt: No such file or directory`
+
+#### *freopen*
+
+*freopen* 函数用于重新打开一个特定的文件流, 函数原型如下:
+
+`FILE *freopen(char const *filename, char const *mode, FILE *stream);`
+
+前两个参数同 *fopen*, 第三个参数就是需要打开的流, 它可以是之前用 *fopen* 打开的流, 也可以是 *stdin, stdout, stderr*
+
+这个函数首先尝试关闭这个流, 然后用指定的文件和模式重新打开这个流。 如果打开失败, 函数就返回 *NULL*, 如果成功, 函数就返回它的第三个参数值
+
+### 关闭流
+
+**流** 使用 *fclose* 函数关闭, 函数原型如下:
+
+`int fclose(FILE *f);`
+
+对于输出流, *fclose* 函数在文件关闭前刷新缓冲区, 如果执行成功, *fclose* 返回 **0**, 否则返回 *EOF*
+
+例子:
+
+```C
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void) {
+    FILE *fp = fopen("test.txt", "r");  // 注意 是 "r", 不是 'r'
+    if(fp == NULL) {  // 也可以写成 if(!fp)
+        perror("test.txt");
+        return EXIT_FAILURE;
+    }
+
+    int c;  // 注意读取字符的时候要声明为 int 类型, 而不是 char 类型; 主要原因是为了处理 EOF, 因为有些编译器的 char 类型是 0~255, 而 常量 EOF 一般是 -1
+    while(  (c = fgetc(fp))  !=  EOF) {  // 用于将文件的内容打印到 标准输出(stdout) 中
+        putchar(c);
+    }
+
+    // 用于检测是否读入完毕
+    if(ferror(fp))  // ferror 函数检查给定的流是否有错误, 如果没有就返回 0, 否则返回非零数字
+        puts("I/O error when reading");
+    else if(feof(fp))  // feof 检查给定的流是否到达了文件尾部(end of file), 也就是EOF
+        puts("End of file reached successfully");
+
+    if( fclose(fp) != 0) {
+        perror("fclose");
+        exit(EXIT_FAILURE);
+    }
+    return EXIT_SUCCESS;
+}
+
+```
+
+假如我在 *test.txt* 中写了 *hello!!!!*, 那么程序可能的输出结果是这样:
+
+```
+hello!!!!End of file reached successfully
+
+```
+
+假如我没有 *test.txt*, 那么会打印:
+
+```
+test.txt: No such file or directory
+
+```
+
 # 23. 十进制 and 十六进制
 
 # 30. 指针 and 二维数组
