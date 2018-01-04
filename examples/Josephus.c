@@ -28,6 +28,9 @@ int main() {
     find_survivor(head, k);  // 找到幸存者
     printf("The survivor is: ");
     print_chain(head);  // 打印
+
+    free(head->next);
+    free(head);
     return 0;
 }
 
