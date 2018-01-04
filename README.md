@@ -893,6 +893,8 @@ void print_chain(NODE *head) {
 
 合法文件名 `FILENAME_MAX` 个字符
 
+例子见[examples/TestFiles/max_file.c](https://github.com/KuroiGengetsu/ReviewC/blob/master/examples/TestFiles/max_file.c)
+
 ### 流 I/O 总览
 
 默认的三个流:
@@ -984,6 +986,8 @@ if(fp == NULL) {
 对于输出流, *fclose* 函数在文件关闭前刷新缓冲区, 如果执行成功, *fclose* 返回 **0**, 否则返回 *EOF*
 
 例子:
+
+源代码见[examples/TestFiles/open_test.c](https://github.com/KuroiGengetsu/ReviewC/blob/master/examples/TestFiles/open_test.c)
 
 ```C
 #include <stdio.h>
