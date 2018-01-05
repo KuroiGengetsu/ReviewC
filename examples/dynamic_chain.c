@@ -204,3 +204,13 @@ void free_all(NODE *head, int len_now) {
     free(head);
     puts("free_all() successfully!");
 }
+
+// 实际上 free_all 可以这样写:
+// void free_all(NODE *head) {
+//     while(head->next != NULL) {
+//         NODE *trash = head;
+//         head = head->next;
+//         free(trash);
+//     }
+//     free(head);
+// }

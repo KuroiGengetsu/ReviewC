@@ -899,7 +899,15 @@ void print_chain(NODE *head) {
 
 ## 输入输出函数
 
-### 错误报告
+### 一些名词
+
+***I/O*** 是指 ***input(输入)*** 和 ***output(输出)***
+
+***流*** 的概念: 就C程序而言, 所有的 *I/O* 操作不过是简单地从程序 *移进或移出字节* 的事情, 因此这种 *字节* 被称为 ***流***
+
+打开一个文件就相当于访问一个流, 用 *FILE* 结构来访问, *FILE* 定义于 `<stdio.h>`, 每一个文件都有对应的 *FILE* 结构与之关联
+
+### 打印错误信息 perror 函数
 
 函数原型: `void perror(char const *message);`
 
@@ -915,7 +923,7 @@ void print_chain(NODE *head) {
 
 2.如果没有, 它会打印 `字符串参数: No error`
 
-### 终止执行
+### 退出程序 exit 函数
 
 函数原型: `void exit( int status);`
 
@@ -993,7 +1001,7 @@ fopen(文件名-字符串, 模式-字符串)
 
 > 如果在模式后添加 `b` 就表示以 **二进制模式** 打开, 例如 *rb*, *wb*, *ab*, *rb+*, *wb+*, *ab+*; 常用到的就是打开音乐、视频文件等, 除非题目有特别要求
 
-打开文件的代码一般如下(如果是 "r" 模式要特别注意判断是否返回值是 *NULL*)
+打开文件的代码一般如下(如果是 "r" 模式要特别注意判断是否返回值是 ***NULL***)
 
 ```C
 FILE *fp = fopen("test.txt", "r");
@@ -1015,7 +1023,7 @@ if(fp == NULL) {
 
 前两个参数同 *fopen*, 第三个参数就是需要打开的流, 它可以是之前用 *fopen* 打开的流, 也可以是 *stdin, stdout, stderr*
 
-这个函数首先尝试关闭这个流, 然后用指定的文件和模式重新打开这个流。 如果打开失败, 函数就返回 *NULL*, 如果成功, 函数就返回它的第三个参数值
+这个函数首先尝试关闭这个流, 然后用指定的文件和模式重新打开这个流。 如果打开失败, 函数就返回 ***NULL***, 如果成功, 函数就返回它的第三个参数值
 
 ### 关闭流
 
@@ -1023,7 +1031,7 @@ if(fp == NULL) {
 
 `int fclose(FILE *f);`
 
-对于输出流, *fclose* 函数在文件关闭前刷新缓冲区, 如果执行成功, *fclose* 返回 **0**, 否则返回 *EOF*
+对于输出流, *fclose* 函数在文件关闭前刷新缓冲区, 如果执行成功, *fclose* 返回 **0**, 否则返回 ***EOF***
 
 例子:
 
@@ -1073,6 +1081,72 @@ hello!!!!End of file reached successfully
 test.txt: No such file or directory
 
 ```
+
+### 字符 I/O
+
+#### 输入字符
+
+字符输入是由 *getchar* 家族执行的, 他们的原型如下所示:
+
+    `int fgetc(FILE *stream);`
+    `int getc(FILE *stream);`
+    `int getchar(void);`
+
+需要操作的流作为参数传给 *getc* 和 *fgetc* , 但 *getchar* 始终从 *stdin* 读取。
+
+每个函数从流中读取 **下一个字符** , 并把他们作为函数的 **返回值** 返回, 如果流中不存在更多的字符(即读取到文件末尾或碰到 *EOF* 标志), 函数就返回常量 *EOF*
+
+注意他们的返回值都是 *int* 类型, 这是为了能够返回 ***EOF*** 常量(一般来说 ***EOF*** 是 *-1*)
+
+#### 输出字符
+
+字符数出是由 *putchar* 家族执行的, 他们的原型如下所示:
+
+    `int fputc(int character, FILE *stream);`
+    `int putc(int character, FILE *stream);`
+    `int putchar(int character);`
+
+需要操作的流作为第二个参数传给 *putc* 和 *fputc*, 但 *putchar* 始终在 *stdout* 中打印, 如果因为某些原因(比如写入到一个已经关闭的流) 导致函数失败, 他们就会返回 ***EOF***
+
+#### 字符 I/O 宏
+
+*fgetc* 和 *fputc* 都是真正的函数, 但 *getc、 putc、 getchar* 和 *putchar* 都是通过 *\#define* 指令定义的 *宏*。 *宏* 在执行时间上的效率稍高, 而函数在程序的长度方面更胜一筹。 之所以提供两种类型的方法(如 *fgetc* 和 *getc*) 是为了允许你根据程序的长度和执行速度那个更重要选择正确的方法。这个区别不必看中, 因为C的速度已经很快, 无论哪种类型, 结果相差不大。
+
+#### 撤销字符 I/O
+
+因为在实际读取之前, 并不知道流的下一个字符是什么, 偶尔读出的字符是想要读取的字符的后面的一个字符, 所以C语言提供了一个撤销字符的函数 *ungetc*:
+
+`int ugetc(int character, FILE *stream);`
+
+*ungetc* 把先前读到的一个字符返回到流中, 这样它可以在以后被重新读入
+
+例如下面一个程序从标准输入中读取字符并把它们转换为整数:
+
+见 [char_to_int.c]()
+
+```C
+#include <stdio.h>
+#include <ctype.h>  // 用到 isdigit
+// 读取正整数或 0
+int read_int() {
+    int value = 0;  // 用于返回最终的值
+    int ch;  // 用于读取字符, 注意它的类型应该是 int
+
+    while( (ch = getchar()) != EOF  &&  isdigit(ch)) {
+        value *= 10;
+        value += ch - '0';
+    }
+
+    ungetc(ch, stdin);  //把非数字字符退回到流中, 这样它就不会丢失
+    return value;
+}
+```
+
+#### 实例
+
+用 *动态链表*, *getchar()* 完成函数从输入的一堆字符串中找到数字并存储他们的值(正负数)并且全部打印(接收输入只能使用getchar)
+
+见 [chars_to_ints.c]
 
 # 23. 十进制 and 十六进制
 
