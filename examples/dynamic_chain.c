@@ -89,7 +89,7 @@ int main() {
     int len_now = get_len(head);
     printf("the length of chain is %d\n", len_now);
 
-  #if GET_LEN
+  #if FREE_ALL
 
     free_all(head, len_now);
 
