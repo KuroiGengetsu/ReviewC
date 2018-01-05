@@ -1117,7 +1117,7 @@ test.txt: No such file or directory
 
 因为在实际读取之前, 并不知道流的下一个字符是什么, 偶尔读出的字符是想要读取的字符的后面的一个字符, 所以C语言提供了一个撤销字符的函数 *ungetc*:
 
-`int ugetc(int character, FILE *stream);`
+`int ungetc(int character, FILE *stream);`
 
 *ungetc* 把先前读到的一个字符返回到流中, 这样它可以在以后被重新读入
 
