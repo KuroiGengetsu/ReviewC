@@ -27,6 +27,7 @@
     - [输入输出函数](#输入输出函数)
         - [打开流](#打开流)
         - [关闭流](#关闭流)
+        - [字符 输入输出](#字符-io)
 - [23 十进制 and 十六进制](#23-十进制-and-十六进制)
 - [30 指针 and 二维数组](#30-指针-and-二维数组)
 - [33 对结构体变量成员进行读写操作](#33-对结构体变量成员进行读写操作)
@@ -1122,7 +1123,7 @@ test.txt: No such file or directory
 
 例如下面一个程序从标准输入中读取字符并把它们转换为整数:
 
-见 [char_to_int.c]()
+见 [char_to_int.c](https://github.com/KuroiGengetsu/ReviewC/blob/master/examples/TestFiles/char_to_int.c)
 
 ```C
 #include <stdio.h>
@@ -1146,7 +1147,7 @@ int read_int() {
 
 用 *动态链表*, *getchar()* 完成函数从输入的一堆字符串中找到数字并存储他们的值(正负数)并且全部打印(接收输入只能使用getchar)
 
-见 [chars_to_ints.c]
+见 [chars_to_ints.c](https://github.com/KuroiGengetsu/ReviewC/blob/master/examples/TestFiles/chars_to_ints.c)
 
 # 23. 十进制 and 十六进制
 
