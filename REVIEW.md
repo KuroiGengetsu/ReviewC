@@ -1,6 +1,8 @@
 # 最后的复习
 
-进行最后的复习, 所有的程序都放在 [final]() 文件夹中
+进行最后的复习, 个别程序完整代码放在 [final](https://github.com/KuroiGengetsu/ReviewC/tree/master/final) 文件夹中
+
+由于都是函数, 所以有些只给出了函数的编写, 并没有源代码
 
 ## 目录
 
